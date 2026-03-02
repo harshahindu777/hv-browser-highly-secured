@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Font Faces ─────────────────────────────────────────────── */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("/assets/fonts/Sora.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design Tokens ──────────────────────────────────────────── */
+@layer base {
+  :root {
+    --radius: 0.375rem;
+
+    /* Core palette — terminal dark */
+    --background: 0.11 0.008 195;
+    --foreground: 0.88 0.04 175;
+    --card: 0.14 0.01 195;
+    --card-foreground: 0.88 0.04 175;
+    --popover: 0.16 0.012 195;
+    --popover-foreground: 0.88 0.04 175;
+
+    /* Primary = cyan-green terminal glow */
+    --primary: 0.78 0.17 175;
+    --primary-foreground: 0.09 0.015 195;
+
+    /* Secondary */
+    --secondary: 0.18 0.015 195;
+    --secondary-foreground: 0.78 0.12 175;
+
+    /* Muted */
+    --muted: 0.16 0.01 200;
+    --muted-foreground: 0.52 0.04 185;
+
+    /* Accent = slightly brighter cyan */
+    --accent: 0.22 0.02 195;
+    --accent-foreground: 0.82 0.18 175;
+
+    /* Destructive = amber-red */
+    --destructive: 0.62 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    /* Borders & inputs */
+    --border: 0.24 0.025 195;
+    --input: 0.22 0.02 195;
+    --ring: 0.65 0.15 175;
+
+    /* Charts */
+    --chart-1: 0.78 0.17 175;
+    --chart-2: 0.7 0.18 200;
+    --chart-3: 0.62 0.22 25;
+    --chart-4: 0.82 0.15 120;
+    --chart-5: 0.65 0.19 290;
+
+    /* Sidebar */
+    --sidebar: 0.115 0.01 195;
+    --sidebar-foreground: 0.82 0.04 175;
+    --sidebar-primary: 0.78 0.17 175;
+    --sidebar-primary-foreground: 0.09 0.015 195;
+    --sidebar-accent: 0.18 0.015 195;
+    --sidebar-accent-foreground: 0.78 0.12 175;
+    --sidebar-border: 0.22 0.022 195;
+    --sidebar-ring: 0.65 0.15 175;
+
+    /* Custom risk colors */
+    --risk-low: 0.74 0.17 155;
+    --risk-medium: 0.76 0.16 75;
+    --risk-high: 0.65 0.22 25;
+    --terminal-glow: 0.78 0.17 175;
+    --success: 0.74 0.17 155;
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Sora", "Geist Mono", system-ui, sans-serif;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, oklch(0.22 0.04 175 / 0.25), transparent),
+      radial-gradient(ellipse 60% 30% at 100% 100%, oklch(0.18 0.04 195 / 0.2), transparent);
+    min-height: 100vh;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--ring));
+  }
+}
+
+@layer utilities {
+  /* Terminal text glow */
+  .text-glow {
+    text-shadow: 0 0 8px oklch(var(--terminal-glow) / 0.6),
+                 0 0 20px oklch(var(--terminal-glow) / 0.3);
+  }
+
+  .text-glow-sm {
+    text-shadow: 0 0 4px oklch(var(--terminal-glow) / 0.5);
+  }
+
+  /* Terminal card */
+  .terminal-card {
+    background: oklch(var(--card));
+    border: 1px solid oklch(var(--border));
+    box-shadow:
+      0 0 0 1px oklch(var(--primary) / 0.05),
+      inset 0 1px 0 oklch(1 0 0 / 0.04);
+  }
+
+  .terminal-card-glow {
+    background: oklch(var(--card));
+    border: 1px solid oklch(var(--primary) / 0.35);
+    box-shadow:
+      0 0 12px oklch(var(--primary) / 0.1),
+      0 0 32px oklch(var(--primary) / 0.05),
+      inset 0 1px 0 oklch(1 0 0 / 0.04);
+  }
+
+  /* Code block */
+  .code-block {
+    font-family: "JetBrains Mono", "Geist Mono", monospace;
+    background: oklch(0.09 0.008 195);
+    border: 1px solid oklch(var(--primary) / 0.2);
+    border-left: 3px solid oklch(var(--primary) / 0.6);
+    color: oklch(var(--primary));
+    padding: 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* Risk badge colors */
+  .badge-low {
+    background: oklch(var(--risk-low) / 0.15);
+    color: oklch(var(--risk-low));
+    border: 1px solid oklch(var(--risk-low) / 0.3);
+  }
+
+  .badge-medium {
+    background: oklch(var(--risk-medium) / 0.15);
+    color: oklch(var(--risk-medium));
+    border: 1px solid oklch(var(--risk-medium) / 0.3);
+  }
+
+  .badge-high {
+    background: oklch(var(--risk-high) / 0.15);
+    color: oklch(var(--risk-high));
+    border: 1px solid oklch(var(--risk-high) / 0.3);
+  }
+
+  /* Scanline overlay effect */
+  .scanlines::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      oklch(0 0 0 / 0.025) 2px,
+      oklch(0 0 0 / 0.025) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Nav item active */
+  .nav-item-active {
+    background: oklch(var(--primary) / 0.1);
+    border-left: 2px solid oklch(var(--primary));
+    color: oklch(var(--primary));
+  }
+
+  .nav-item {
+    border-left: 2px solid transparent;
+    color: oklch(var(--muted-foreground));
+  }
+
+  .nav-item:hover {
+    background: oklch(var(--accent));
+    color: oklch(var(--foreground));
+    border-left-color: oklch(var(--primary) / 0.4);
+  }
+
+  /* Progress bar glow */
+  .progress-glow [data-slot="progress-indicator"] {
+    background: oklch(var(--primary));
+    box-shadow: 0 0 8px oklch(var(--primary) / 0.5);
+  }
+
+  /* Mono font */
+  .font-mono-custom {
+    font-family: "JetBrains Mono", "Geist Mono", monospace;
+  }
+
+  /* Success state */
+  .success-banner {
+    background: oklch(var(--success) / 0.1);
+    border: 1px solid oklch(var(--success) / 0.35);
+    color: oklch(var(--success));
+    box-shadow: 0 0 16px oklch(var(--success) / 0.08);
+  }
+}
+
+/* ─── Background Patterns ────────────────────────────────── */
+[data-bg-pattern="grid"] body,
+[data-bg-pattern="grid"] .bg-background {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+[data-bg-pattern="dots"] body,
+[data-bg-pattern="dots"] .bg-background {
+  background-image: radial-gradient(rgba(34, 211, 238, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+[data-bg-pattern="noise"] body,
+[data-bg-pattern="noise"] .bg-background {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
